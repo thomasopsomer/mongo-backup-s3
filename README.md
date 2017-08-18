@@ -1,5 +1,11 @@
 # MongoDB S3 Backup Docker image
 
+Based on https://github.com/agmangas/mongo-backup-s3.
+With some modification from https://gist.github.com/caraboides/7679bb73f4f13e36fc2b9dbded3c24c0
+And simplification in Dockerfile :)
+
+...
+
 Docker image that performs periodic backups on a MongoDB database and then uploads the results to Amazon S3.
 
 Based on the [dbader/schedule](https://github.com/dbader/schedule) Python scheduling package.

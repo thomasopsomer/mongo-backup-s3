@@ -1,24 +1,13 @@
-FROM ubuntu:16.04
+FROM 2.7-alpine3.6
 
-# Install Python
-RUN apt-get update && \
-    apt-get -y install python python-pip
 
-# Install AWS CLI and schedule package
-RUN pip install awscli schedule
-
-# Install MongoDB tools
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-RUN echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | \
-    tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-RUN apt-get update && \
-    apt-get install -y mongodb-org-tools
+# Install AWS CLI, schedule package, and mongodb tools (for mongodump)
+RUN pip install awscli schedule && \
+	apk update && apk mongodb-tools
 
 # Add scripts
-ADD backup.sh /app/backup.sh
-ADD run.py /app/run.py
+ADD app /app
 RUN chmod +x /app/backup.sh
-RUN chmod +x /app/run.py
 
 # Default environment variables
 ENV BACKUP_INTERVAL 1
