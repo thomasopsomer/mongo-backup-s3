@@ -17,8 +17,11 @@ The following table describes the available configuration environment variables.
 Name | Description | Default
 --- | --- | ---
 `MONGO_HOST` | MongoDB instance hostname | *Required*
+`MONGO_PORT` | MongoDB database name | *Required*
 `MONGO_DB` | MongoDB database name | *Required*
-`S3_BUCKET` | Amazon S3 bucket name | *Required*
+`MONGO_USERNAME` | MongoDB database name | *Required*
+`MONGO_PASSWORD` | MongoDB database name | *Required*
+`S3_FOLDER` | Amazon S3 bucket name | *Required*
 `AWS_ACCESS_KEY_ID` | Amazon AWS access key | *Required*
 `AWS_SECRET_ACCESS_KEY` | Amazon AWS secret | *Required*
 `BACKUP_INTERVAL` | Interval between each backup (days) | `1`
@@ -31,5 +34,24 @@ Name | Description | Default
 The following command starts a *mongo-s3-backup* container that will stay in the background uploading backups of the *testdb* database on the *my-mongo-host* MongoDB instance every day at 2:00. The backups will be uploaded to an S3 bucket named *my-s3-bucket*:
 
 ```
-docker run -d -e MONGO_HOST=my-mongo-host -e MONGO_DB=testdb -e S3_BUCKET=my-s3-bucket -e AWS_ACCESS_KEY_ID=<your_access_key> -e AWS_SECRET_ACCESS_KEY=<your_access_secret> -e BACKUP_INTERVAL=1 --name mongo_backups agmangas/mongo-backup-s3
+docker run -d --name mongo_backups \
+	-e MONGO_HOST=my-mongo-host \
+	-e MONGO_DB=testdb
+	-e S3_BUCKET=my-s3-bucket \
+	-e AWS_ACCESS_KEY_ID=<your_access_key> \
+	-e AWS_SECRET_ACCESS_KEY=<your_access_secret> \
+	-e BACKUP_INTERVAL=1  \
+	agmangas/mongo-backup-s3
 ```
+
+docker run -d --name mongo_backups \
+	-e MONGO_HOST=localhost -e MONGO_PORT=27017 \
+	-e MONGO_USERNAME=root -e MONGO_PASSWORD=test \
+	-e MONGO_DB=asgardai \
+	-e S3_FOLDER=s3://asgard-db-backup/mongo/ \
+	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-e BACKUP_INTERVAL=1  \
+	-e BACKUP_TIME=19:00 \
+	asgard/mongo-backup-s3
+

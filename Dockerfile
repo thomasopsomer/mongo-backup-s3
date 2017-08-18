@@ -1,9 +1,8 @@
-FROM 2.7-alpine3.6
-
+FROM python:2.7-alpine3.6
 
 # Install AWS CLI, schedule package, and mongodb tools (for mongodump)
 RUN pip install awscli schedule && \
-	apk update && apk mongodb-tools
+	apk update && apk add mongodb-tools
 
 # Add scripts
 ADD app /app
