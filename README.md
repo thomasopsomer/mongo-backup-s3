@@ -35,23 +35,13 @@ The following command starts a *mongo-s3-backup* container that will stay in the
 
 ```
 docker run -d --name mongo_backups \
-	-e MONGO_HOST=my-mongo-host \
-	-e MONGO_DB=testdb
-	-e S3_BUCKET=my-s3-bucket \
-	-e AWS_ACCESS_KEY_ID=<your_access_key> \
-	-e AWS_SECRET_ACCESS_KEY=<your_access_secret> \
-	-e BACKUP_INTERVAL=1  \
-	agmangas/mongo-backup-s3
-```
-
-docker run -d --name mongo_backups \
 	-e MONGO_HOST=localhost -e MONGO_PORT=27017 \
 	-e MONGO_USERNAME=root -e MONGO_PASSWORD=test \
-	-e MONGO_DB=asgardai \
+	-e MONGO_DB=data \
 	-e S3_FOLDER=s3://asgard-db-backup/mongo/ \
 	-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	-e BACKUP_INTERVAL=1  \
 	-e BACKUP_TIME=19:00 \
 	asgard/mongo-backup-s3
-
+```

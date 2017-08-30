@@ -12,8 +12,9 @@ import subprocess
 import functools
 import traceback
 import os
-
 import schedule
+import begin
+
 
 BACKUP_SCRIPT_PATH = "./app/backup.sh"
 ENV_BACKUP_INTERVAL = "BACKUP_INTERVAL"
@@ -40,7 +41,9 @@ def backup_job():
     print("Backup finished at {}".format(datetime.datetime.now().isoformat()))
 
 
-if __name__ == "__main__":
+@begin.start
+@begin.convert(_automatic=True)
+def main(test=False):
     print("Starting periodic MongoDB backup at {}".format(
         datetime.datetime.now().isoformat()))
 
@@ -61,8 +64,11 @@ if __name__ == "__main__":
         "Executing backups every {} day/s at {}"
         .format(interval_days, backup_time))
 
-    schedule.every(interval_days).days.at(backup_time).do(backup_job)
+    if test:
+        backup_job()
+    else:
+        schedule.every(interval_days).days.at(backup_time).do(backup_job)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)

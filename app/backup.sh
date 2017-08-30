@@ -15,7 +15,7 @@ set -e
 
 
 # define path to dump in 3
-S3_PATH=${S3_FOLDER}${FILE_PREFIX}$(date -u +${DATE_FORMAT}).dump.gzip
+S3_PATH=${S3_FOLDER}${FILE_PREFIX}${MONGO_DB}$(date -u +${DATE_FORMAT}).dump.gzip
 # build mongodb uri with user / password and host / port
 mongo_uri=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}
 
