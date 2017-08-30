@@ -8,14 +8,14 @@ set -e
 : ${MONGO_USERNAME:?}
 : ${MONGO_PASSWORD:?}
 : ${S3_FOLDER:?}
-: ${AWS_ACCESS_KEY_ID:?}
-: ${AWS_SECRET_ACCESS_KEY:?}
+#: ${AWS_ACCESS_KEY_ID:?}
+#: ${AWS_SECRET_ACCESS_KEY:?}
 : ${DATE_FORMAT:?}
 : ${FILE_PREFIX:?}
 
 
 # define path to dump in 3
-S3_PATH=${S3_FOLDER}${FILE_PREFIX}${MONGO_DB}$(date -u +${DATE_FORMAT}).dump.gzip
+S3_PATH=${S3_FOLDER}${FILE_PREFIX}${MONGO_DB}-$(date -u +${DATE_FORMAT}).dump.gzip
 # build mongodb uri with user / password and host / port
 mongo_uri=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}
 
