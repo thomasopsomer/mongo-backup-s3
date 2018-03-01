@@ -6,7 +6,6 @@ RUN pip install awscli schedule begins && \
 
 # Add scripts
 ADD app /app
-RUN chmod +x /app/backup.sh
 
 # Default environment variables
 ENV BACKUP_INTERVAL 1
