@@ -15,4 +15,4 @@ ENV DATE_FORMAT %Y%m%d-%H%M%S
 ENV FILE_PREFIX backup-
 
 # Run the schedule command on startup
-CMD ["python", "-u", "/app/run.py"]
+ENTRYPOINT ["python", "-u", "/app/run.py"]
